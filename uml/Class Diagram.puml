@@ -1,0 +1,52 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class FXMLController
+{
+{method} +addNewList()
+{method} +removeList()
+{method} +editTitle()
+{method} +addNewItem()
+{method} +removeItem()
+{method} +editDescription()
+{method} +editDueDate()
+{method} +markItemAsComplete()
+{method} +displayAllItems()
+{method} +displayIncompletedItems()
+{method} +displayCompletedItems()
+{method} +saveItemsFromList()
+{method} +saveAllItems()
+{method} +loadSingleList()
+{method} +loadMultipleLists()
+
+}
+
+
+class Tasks
+{
+{field} ArrayList<String> current_lists
+{field} String [][] current_items
+{method} +addNewListReaction()
+{method} +removeListReaction()
+{method} +editTitleReaction()
+{method} +addNewItemReaction()
+{method} +removeItemReaction()
+{method} +editDescriptionReaction()
+{method} +editDueDateReaction()
+{method} +markItemAsCompleteReaction()
+{method} +displayAllItemsReaction()
+{method} +displayIncompletedItemsReaction()
+{method} +displayCompletedItemsReaction()
+{method} +saveItemsFromListReaction()
+{method} +saveAllItemsReaction()
+{method} +loadSingleListReaction()
+{method} +loadMultipleListsReaction()
+}
+class MainApp
+{
+{method} +start()
+{method} +main()
+}
+
+
+@enduml
