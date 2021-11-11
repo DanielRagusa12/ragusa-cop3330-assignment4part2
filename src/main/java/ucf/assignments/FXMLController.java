@@ -1,15 +1,41 @@
-package ucf.assignments;
-
-/*
+package ucf.assignments;/*
  *  UCF COP3330 Fall 2021 Assignment 4 Solution
  *  Copyright 2021 Daniel Ragusa
  */
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import ucf.assignments.Tasks;
 
+import java.util.ArrayList;
 
 
 public class FXMLController
 {
+    public Button addNewItem_btn;
+    public Button removeItem_btn;
+    public Button editDescription_btn;
+    public Button editDueDate_btn;
+    public Button markItemAsComplete_btn;
+    public ListView list_of_items;
+    public Button displayAllItems_btn;
+    public Button displayIncompletedItems_btn;
+    public Button displayCompletedItems_btn;
+    public Button loadSingleList_btn;
+    public TextField addNewItem_Desciption;
+    public TextField addNewItem_DueDate;
+    public TextField editDescription_Description;
+    public TextField editDueDate_DueDate;
+    public Button saveList_btn;
+    public ChoiceBox loadSingleList_selector;
+    public Button clearAllItems_btn;
+    public Button markItemAsIncomplete_btn;
+    public TextField saveList_title;
+    Tasks Tasks= new Tasks();
+    int addNewItem_i=0;
+
 
     /*
     The main idea of this controller class is to register which behavior the user wishes to execute.
@@ -22,6 +48,7 @@ public class FXMLController
 
 
 
+
     //Function that allows the user to add a new list.
     public void addNewList(ActionEvent actionEvent)
     {
@@ -30,6 +57,10 @@ public class FXMLController
         This function will read the current text from the title text field assigned to the addNewList button and store it in a string variable.
         It will then pass this string variable to addNewListReaction, in the Tasks class.
         */
+        //String title=addNewList_Title.getText();
+        //Tasks.addNewListReaction(title);
+        //list_of_lists.getItems().add(title);
+
 
 
     }
@@ -62,6 +93,14 @@ public class FXMLController
 
     public void addNewItem(ActionEvent actionEvent)
     {
+        String description=addNewItem_Desciption.getText();
+        String due_date=addNewItem_DueDate.getText();
+        Tasks.addNewItemReaction(description,due_date);
+        list_of_items.getItems().add(Tasks.current_items[addNewItem_i][0]+","+Tasks.current_items[addNewItem_i][1]+","+Tasks.current_items[addNewItem_i][2]);
+        addNewItem_i++;
+
+
+
     /*
     This function will be executed when the user presses the add new item button.
     The function will call addNewItemReaction, from the Tasks class, and pass an empty 2d array of string that will hold the items.
@@ -77,6 +116,9 @@ public class FXMLController
         This function will be executed when the removeItem button is clicked by the user.
         It will then call removeItemReaction, from the Tasks class, with the array that holds the existing items.
          */
+        int index =  list_of_items.getFocusModel().getFocusedIndex();
+        Tasks.removeItemReaction(index);
+        list_of_items.getItems().remove(index);
 
     }
 
@@ -190,5 +232,16 @@ public class FXMLController
 
     }
 
+    public void saveList(ActionEvent actionEvent)
+    {
+        
+    }
+
+    public void clearAllItems(ActionEvent actionEvent) {
+    }
+
+    public void markItemAsIncomplete(ActionEvent actionEvent) {
+    }
 }
+
 
