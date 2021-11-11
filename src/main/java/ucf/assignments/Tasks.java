@@ -6,10 +6,18 @@ package ucf.assignments;
 
 import java.util.ArrayList;
 
+
+
 public class Tasks
 {
     //Here a global ArrayList of String will be created to hold current lists. current_lists
     //Here a global 2d array of String will be created to hold current items. current_items[100][2]
+
+    ArrayList<String> current_lists= new ArrayList<String>();
+    String [][] current_items= new String [101][3];
+    //ArrayList<String> current_items= new ArrayList<String>();
+    int addNewItem_i=0;
+
 
     public ArrayList<String> addNewListReaction (String title)
     {
@@ -20,8 +28,9 @@ public class Tasks
         This function will return current_lists so that it can be used for junit testing to ensure each list is added properly.
 
          */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
+        current_lists.add(title);
+        return current_lists;
+
     }
     public ArrayList<String> removeListReaction (ArrayList<String> current_lists)
     {
@@ -50,7 +59,7 @@ public class Tasks
         ArrayList<String> nothing= new ArrayList<String>();
         return nothing;
     }
-    public String[][]  addNewItemReaction(String[][] current_items)
+    public String [][]  addNewItemReaction(String description, String due_date)
     {
         /*
         This function will store the text from the addNewItem description, and due date text fields into 2 separate string variables, these String will be defaulted to NULL.
@@ -61,10 +70,15 @@ public class Tasks
         Lastly the function will return the current_items array for junit testing.
 
          */
-        String [][] nothing=new String [100][2];
-        return nothing;
+        current_items[addNewItem_i][0]=description;
+        current_items[addNewItem_i][1]=due_date;
+        current_items[addNewItem_i][2]="Incomplete";
+        System.out.print(current_items[addNewItem_i][0]);
+        addNewItem_i++;
+
+        return current_items;
     }
-    public String [][] removeItemReaction(String [][] current_items)
+    public String [][] removeItemReaction(int index)
     {
         /*
         This function will take the current items 2d array as parameter.
@@ -75,8 +89,10 @@ public class Tasks
         This index will be erased from the ListView item list, allowing the user to immediately see the updated list of items.
         Lastly, the function will return the updated current_items array for junit testing.
          */
-        String [][] nothing=new String [100][2];
-        return nothing;
+        current_items[index][0]="Removed Item";
+        current_items[index][1]="";
+        current_items[index][2]="";
+        return current_items;
 
     }
     public String [][] editDescriptionReaction(String [][] current_items)

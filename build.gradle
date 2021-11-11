@@ -16,5 +16,8 @@ javafx {
 mainClassName = "ucf.assignments.MainApp"
 
 dependencies {
-    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
+test {
+    useJUnitPlatform()
 }

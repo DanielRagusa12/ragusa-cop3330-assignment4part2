@@ -17,6 +17,7 @@ class TasksTest {
          */
     }
 
+
     @org.junit.jupiter.api.Test
     void removeListReaction()
     {
@@ -41,12 +42,21 @@ class TasksTest {
     @org.junit.jupiter.api.Test
     void addNewItemReaction()
     {
+        Tasks TestTasks = new Tasks();
+        String description="Test";
+        String due_date= "0000-00-00";
+        TestTasks.addNewItemReaction(description,due_date);
+        assertEquals("Test",TestTasks.current_items[0][0]);
+        assertEquals("0000-00-00",TestTasks.current_items[0][1]);
+        assertEquals("Incomplete",TestTasks.current_items[0][2]);
+
         /*
         This test will be creating a 2d array of string that holds the following values at each index. [0][0]="0",[0][1]="1",[0][2]="2".
         The addNewItemReaction defaults all string to NULL, because in the junit test there will be no input from the applications text fields.
         This means the returned 2d array of string should now hold NULL instead of "0","1","2".
         This test will assert that NULL is at all 3 indexes of the returned 2d Array.
          */
+
     }
 
     @org.junit.jupiter.api.Test
@@ -59,6 +69,24 @@ class TasksTest {
         This test will assert that the returned ArrayList from removeItemReaction will now NOT hold "test" at index [0].
 
          */
+        Tasks TestTasks = new Tasks();
+        TestTasks.current_items[0][0]="Chores";
+        TestTasks.current_items[0][1]="0000-00-00";
+        TestTasks.current_items[0][2]="Complete";
+
+        TestTasks.current_items[5][0]="Homework";
+        TestTasks.current_items[5][1]="5555-55-55";
+        TestTasks.current_items[5][2]="Incomplete";
+
+        TestTasks.removeItemReaction(0);
+        assertEquals("Removed Item",TestTasks.current_items[0][0]);
+        assertEquals("",TestTasks.current_items[0][1]);
+        assertEquals("",TestTasks.current_items[0][2]);
+
+        TestTasks.removeItemReaction(5);
+        assertEquals("Removed Item",TestTasks.current_items[5][0]);
+        assertEquals("",TestTasks.current_items[5][1]);
+        assertEquals("",TestTasks.current_items[5][2]);
     }
 
     @org.junit.jupiter.api.Test
