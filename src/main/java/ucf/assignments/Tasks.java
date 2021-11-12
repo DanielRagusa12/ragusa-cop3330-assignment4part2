@@ -19,8 +19,9 @@ public class Tasks
     int addNewItem_i=0;
 
 
-    public ArrayList<String> addNewListReaction (String title)
-    {
+
+    //public ArrayList<String> addNewListReaction (String title)
+   // {
         /*
         This function will take in the users input as a string variable called title.
         It will then add the title to the current_lists ArrayList.
@@ -28,12 +29,12 @@ public class Tasks
         This function will return current_lists so that it can be used for junit testing to ensure each list is added properly.
 
          */
-        current_lists.add(title);
-        return current_lists;
+       // current_lists.add(title);
+       // return current_lists;
 
-    }
-    public ArrayList<String> removeListReaction (ArrayList<String> current_lists)
-    {
+    //}
+    //public ArrayList<String> removeListReaction (ArrayList<String> current_lists)
+    //{
         /*
         This function will create an index integer variable that holds the index of the currently highlighted list in the application when the removeList button is clicked.
         This index variable will be defaulted to 0.
@@ -42,12 +43,12 @@ public class Tasks
         This function will then return the updated current_list_titles so that it can be compared to the original list for junit testing.
          */
 
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
+        //ArrayList<String> nothing= new ArrayList<String>();
+       // return nothing;
 
-    }
-    public ArrayList<String> editTitleReaction(String title)
-    {
+   // }
+  //  public ArrayList<String> editTitleReaction(String title)
+   // {
         /*
         This function will take in a string that holds the users text from the editTitle text field.
         This function will use the same approach as removeList by creating an index integer variable that holds the index of the currently highlighted list in the application when the editTitle button is clicked.
@@ -56,9 +57,9 @@ public class Tasks
         It will use the current_lists to update the list_of_lists listView variable which will then allow the change to be visible to the user.
         Lastly this function will return the current_lists array list for junit testing.
          */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
-    }
+      //  ArrayList<String> nothing= new ArrayList<String>();
+      //  return nothing;
+   // }
     public String [][]  addNewItemReaction(String description, String due_date)
     {
         /*
@@ -89,13 +90,13 @@ public class Tasks
         This index will be erased from the ListView item list, allowing the user to immediately see the updated list of items.
         Lastly, the function will return the updated current_items array for junit testing.
          */
-        current_items[index][0]="Removed Item";
+        current_items[index][0]="";
         current_items[index][1]="";
         current_items[index][2]="";
         return current_items;
 
     }
-    public String [][] editDescriptionReaction(String [][] current_items)
+    public String [][] editDescriptionReaction(int index,String new_description)
     {
         /*
         This function will take in the array current_items as its parameter.
@@ -108,10 +109,10 @@ public class Tasks
         The function will then use the new string to update the listView items list.
         Lastly the function will return the current_items array for junit testing.
          */
-        String [][] nothing=new String [100][2];
-        return nothing;
+        current_items[index][0]=new_description;
+        return current_items;
     }
-    public String [][] editDueDateReaction(String [][] current_items)
+    public String [][] editDueDateReaction(int index,String  new_due_date)
     {
         /*
         This function will take in the 2d array that holds all items as parameter.
@@ -124,10 +125,10 @@ public class Tasks
         The user will then be able to see the updated due date.
         Lastly the function will return the current_items 2d array for junit testing.
          */
-        String [][] nothing=new String [100][2];
-        return nothing;
+        current_items[index][1]=new_due_date;
+        return current_items;
     }
-    public String [][] markItemAsCompleteReaction(String [][] current_items)
+    public String [][] markItemAsCompleteReaction(int index)
     {
         /*
         This function will take in the current_items 2d array as parameter.
@@ -139,8 +140,15 @@ public class Tasks
         The user will then be able to view the updated status.
         Lastly the function will return the edited current_items array to be used in junit testing.
          */
-        String [][] nothing=new String [100][2];
-        return nothing;
+        current_items[index][2]="Complete";
+        return current_items;
+    }
+
+    public String [][] markItemAsIncompleteReaction(int index)
+    {
+        current_items[index][2]="Incomplete";
+        return current_items;
+
     }
     public ArrayList<String> displayAllItemsReaction(String [][] current_items)
     {
@@ -159,6 +167,17 @@ public class Tasks
          */
         ArrayList<String> nothing= new ArrayList<String>();
         return nothing;
+    }
+    public String [][] clearAllItemsReaction()
+    {
+        for(int i=0;i< current_items.length;i++)
+        {
+            current_items[i][0]="";
+            current_items[i][1]="";
+            current_items[i][2]="";
+        }
+        addNewItem_i=0;
+        return current_items;
     }
     public ArrayList<String> displayIncompletedItemsReaction(String [][] current_items)
     {

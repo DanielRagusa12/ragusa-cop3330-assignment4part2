@@ -4,40 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TasksTest {
 
-    @org.junit.jupiter.api.Test
-    void addNewListReaction()
-    {
-        /*
-        Here a ArrayList of string will be declared called current_lists.
-        This test will be passing a string variable called title to the addNewListReaction function.
-        If the function works correctly then the title should be added to current_lists.
-        The test will assert that this title is the same as the string at index [0] of current_lists.
-        This will ensure the list was correctly added.
-
-         */
-    }
-
-
-    @org.junit.jupiter.api.Test
-    void removeListReaction()
-    {
-        /*
-        This test will be passing an ArrayList of string that has 1 string at index [0].
-        Since the removeListReaction function defaults the index to 0 the function should remove the string from the ArrayList.
-        The test will assert that the returned ArrayList that was passed is NULL at index [0].
-         */
-    }
-
-    @org.junit.jupiter.api.Test
-    void editTitleReaction()
-    {
-        /*
-        This test will initialize an empty ArrayList of string called test.
-        This test will initialize a string variable and set it to "working".
-        This test will be passing the string to the editTitleReaction function. The editTitleReaction function will return to the test ArrayList.
-        This test will be asserting that the empty array now holds "working" at index [0].
-         */
-    }
 
     @org.junit.jupiter.api.Test
     void addNewItemReaction()
@@ -79,12 +45,12 @@ class TasksTest {
         TestTasks.current_items[5][2]="Incomplete";
 
         TestTasks.removeItemReaction(0);
-        assertEquals("Removed Item",TestTasks.current_items[0][0]);
+        assertEquals("",TestTasks.current_items[0][0]);
         assertEquals("",TestTasks.current_items[0][1]);
         assertEquals("",TestTasks.current_items[0][2]);
 
         TestTasks.removeItemReaction(5);
-        assertEquals("Removed Item",TestTasks.current_items[5][0]);
+        assertEquals("",TestTasks.current_items[5][0]);
         assertEquals("",TestTasks.current_items[5][1]);
         assertEquals("",TestTasks.current_items[5][2]);
     }
@@ -98,6 +64,16 @@ class TasksTest {
         If the function is working correctly then it should only replace the string value at index [0][0], and the others should still be "1", and "2".
         The test will then assert that the returned 2d array will be NULL at index [0][0], and that indexes [0][1], and [0][2] are unchanged.
          */
+        Tasks TestTasks = new Tasks();
+        TestTasks.current_items[0][0]="Chores";
+        TestTasks.current_items[0][1]="0000-00-00";
+        TestTasks.current_items[0][2]="Complete";
+
+        TestTasks.editDescriptionReaction(0,"Homework");
+
+        assertEquals(TestTasks.current_items[0][0],"Homework");
+
+
     }
 
     @org.junit.jupiter.api.Test
@@ -109,6 +85,15 @@ class TasksTest {
         If the function is working correctly then it should only replace the string value at index [0][1], and the others should still be "0", and "2".
         The test will then assert that the returned 2d array will be NULL at index [0][1], and that indexes [0][0], and [0][2] are unchanged.
         */
+
+        Tasks TestTasks = new Tasks();
+        TestTasks.current_items[0][0]="Chores";
+        TestTasks.current_items[0][1]="0000-00-00";
+        TestTasks.current_items[0][2]="Complete";
+
+        TestTasks.editDueDateReaction(0,"2222-22-22");
+
+        assertEquals(TestTasks.current_items[0][1],"2222-22-22");
     }
 
     @org.junit.jupiter.api.Test
@@ -120,8 +105,53 @@ class TasksTest {
         If the function is working correctly then it should only replace the string value at index [0][3], and the others should still be "Chores", and "2022-02-12".
         The test will then assert that the returned 2d array will hold a string "Completed" at index [0][2], and that indexes [0][0], and [0][1] are unchanged.
          */
+        Tasks TestTasks = new Tasks();
+        TestTasks.current_items[0][0]="Chores";
+        TestTasks.current_items[0][1]="0000-00-00";
+        TestTasks.current_items[0][2]="Incomplete";
+
+        TestTasks.markItemAsCompleteReaction(0);
+
+        assertEquals(TestTasks.current_items[0][2],"Complete");
 
     }
+
+    @org.junit.jupiter.api.Test
+    void markItemAsIncompleteReaction()
+    {
+
+        Tasks TestTasks = new Tasks();
+        TestTasks.current_items[0][0]="Chores";
+        TestTasks.current_items[0][1]="0000-00-00";
+        TestTasks.current_items[0][2]="Complete";
+
+        TestTasks.markItemAsIncompleteReaction(0);
+
+        assertEquals(TestTasks.current_items[0][2],"Incomplete");
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void clearAllItemsReaction()
+    {
+        Tasks TestTasks = new Tasks();
+        TestTasks.current_items[0][0]="Chores";
+        TestTasks.current_items[0][1]="0000-00-00";
+        TestTasks.current_items[0][2]="Complete";
+
+        TestTasks.current_items[1][0]="Homework";
+        TestTasks.current_items[1][1]="2222-22-22";
+        TestTasks.current_items[1][2]="Incomplete";
+
+        TestTasks.clearAllItemsReaction();
+
+        assertEquals(TestTasks.current_items[0][0],"");
+
+    }
+
+
+
+
 
     @org.junit.jupiter.api.Test
     void displayAllItemsReaction()
