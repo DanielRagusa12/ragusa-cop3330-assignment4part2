@@ -36,7 +36,7 @@ public class FXMLController
     public Button markItemAsIncomplete_btn;
     public TextField saveList_title;
     Tasks Tasks= new Tasks();
-    int addNewItem_i=0;
+
 
 
     /*
@@ -51,57 +51,28 @@ public class FXMLController
 
 
 
-    //Function that allows the user to add a new list.
-    //public void addNewList(ActionEvent actionEvent)
-   // {
-        /*
-        This method will happen when the user clicks on the addNewList button.
-        This function will read the current text from the title text field assigned to the addNewList button and store it in a string variable.
-        It will then pass this string variable to addNewListReaction, in the Tasks class.
-        */
-        //String title=addNewList_Title.getText();
-        //Tasks.addNewListReaction(title);
-        //list_of_lists.getItems().add(title);
 
 
 
-   // }
 
 
-    //Function that removes a list.
-  //  public void removeList(ActionEvent actionEvent)
-  //  {
-        /*
-        This will happen when the user clicks on the removeListButton.
-        This function will call removeListReaction, from the Tasks class, with current_list_titles which holds the title of each list at an index.
-         */
-
-  //  }
-
-
-//This function will allow the user to edit the title of a list in the left-hand listView area.
-
-  //  public void editTitle(ActionEvent actionEvent)
-  //  {
-        /*
-        This function will happen when the user clicks on the editTitle button.
-        This function will call editTitleReaction, from the Tasks class, with the string from the edit title text field in the application.
-         */
-
-  //  }
 
 
 
     //Function to add a new item to an existing list.
 
-
     public void addNewItem(ActionEvent actionEvent)
     {
+        list_of_items.setItems(Tasks.items);
+
+
         String description=addNewItem_Desciption.getText();
         String due_date=addNewItem_DueDate.getText();
-        Tasks.addNewItemReaction(description,due_date);
-        list_of_items.getItems().add(Tasks.current_items[addNewItem_i][0]+","+Tasks.current_items[addNewItem_i][1]+","+Tasks.current_items[addNewItem_i][2]);
-
+        if(!description.isEmpty() && !due_date.isEmpty())
+        {
+            Tasks.addNewItemReaction(description, due_date);
+            //Tasks.addNewItem_i++;
+        }
 
 
     /*
@@ -120,9 +91,10 @@ public class FXMLController
         It will then call removeItemReaction, from the Tasks class, with the array that holds the existing items.
          */
         int index =  list_of_items.getFocusModel().getFocusedIndex();
-        Tasks.removeItemReaction(index);
-        list_of_items.getItems().remove(index);
-        list_of_items.getItems().add(index,"");
+        if(index>=0)
+        {
+            Tasks.removeItemReaction(index);
+        }
 
 
     }
@@ -138,8 +110,6 @@ public class FXMLController
         int index =  list_of_items.getFocusModel().getFocusedIndex();
         String new_description=editDescription_Description.getText();
         Tasks.editDescriptionReaction(index,new_description);
-        list_of_items.getItems().remove(index);
-        list_of_items.getItems().add(index,Tasks.current_items[index][0]+","+Tasks.current_items[index][1]+","+Tasks.current_items[index][2]);
 
     }
 
@@ -155,9 +125,6 @@ public class FXMLController
         int index =  list_of_items.getFocusModel().getFocusedIndex();
         String new_due_date=editDueDate_DueDate.getText();
         Tasks.editDueDateReaction(index,new_due_date);
-        list_of_items.getItems().remove(index);
-        list_of_items.getItems().add(index,Tasks.current_items[index][0]+","+Tasks.current_items[index][1]+","+Tasks.current_items[index][2]);
-
     }
 
     //A function that allows the user to mark a current item as complete.
@@ -169,8 +136,6 @@ public class FXMLController
          */
         int index =  list_of_items.getFocusModel().getFocusedIndex();
         Tasks.markItemAsCompleteReaction(index);
-        list_of_items.getItems().remove(index);
-        list_of_items.getItems().add(index,Tasks.current_items[index][0]+","+Tasks.current_items[index][1]+","+Tasks.current_items[index][2]);
 
 
     }
@@ -178,8 +143,6 @@ public class FXMLController
     {
         int index =  list_of_items.getFocusModel().getFocusedIndex();
         Tasks.markItemAsIncompleteReaction(index);
-        list_of_items.getItems().remove(index);
-        list_of_items.getItems().add(index,Tasks.current_items[index][0]+","+Tasks.current_items[index][1]+","+Tasks.current_items[index][2]);
 
 
     }
@@ -192,19 +155,20 @@ public class FXMLController
         This function will be executed when the user clicks on the displayAllItems button.
         This function will call displayAllItemsReaction, from the Tasks class, with the current_items 2d array that holds all items.
          */
-
-
+        Tasks.displayAllItemsReaction();
+        //list_of_items.setItems(Tasks.items);
 
     }
     public void clearAllItems(ActionEvent actionEvent)
     {
         Tasks.clearAllItemsReaction();
-        list_of_items.getItems().clear();
     }
 
     //A function that allows the user to sort the ListView item list by only incomplete items.
     public void displayIncompletedItems(ActionEvent actionEvent)
     {
+        Tasks.displayIncompletedItemsReaction();
+        //list_of_items.setItems(Tasks.incomplete_items);
         /*
         This function will be executed when the user clicks the displayIncompletedItems button.
         This function will call displayIncompletedItemsReaction, from the Tasks class, with the 2d array current_items which holds all items.
@@ -216,6 +180,7 @@ public class FXMLController
     //A function that allows the user to sort the ListView item list by only incomplete items.
     public void displayCompletedItems(ActionEvent actionEvent)
     {
+        Tasks.displayCompletedItemsReaction();
         /*
         This function will be executed when the user clicks the displayCompletedItems button.
         This function will call displayCompletedItemsReaction, from the Tasks class, with the 2d array current_items which holds all items.
@@ -224,26 +189,8 @@ public class FXMLController
     }
 
     //A function that allows the user to save all the items from a specific list into external storage.
-    public void saveItemsFromList(ActionEvent actionEvent)
-    {
-        /*
-        This function will be executed when the user clicks the saveItemsFromList button.
-        This function will create an integer variable that holds the position of the currently highlighted list when the user clicks the aveItemsFromList button.
-        This function will then use this index to find the title of the list from the current_lists ArrayList, and save it in a string variable called title.
-        This function will then call saveItemsFromListReaction, from the Tasks class, with the 2d array current_items, and the title string.
-         */
 
-    }
 
-    //A function that allows the user to save all current items.
-    public void saveAllItems(ActionEvent actionEvent)
-    {
-        /*
-        This function will be executed when the user clicks the saveAllItems button.
-        This function will call saveAllItemsReaction from Tasks class.
-         */
-
-    }
 
     //A function that allows the user to load a singular list from external storage.
     public void loadSingleList(ActionEvent actionEvent)
@@ -257,16 +204,6 @@ public class FXMLController
 
     }
 
-    //A function that allows the user to load multiple lists from external storage.
-    public void loadMultipleLists(ActionEvent actionEvent)
-    {
-        /*
-        This function will be executed when the user clicks the loadSingleList button.
-        This function will create a string variable called titles that holds the string from the loadMultipleLists title text field.
-        This function will call loadMultipleListsReaction, from the Tasks class, with the title string.
-         */
-
-    }
 
     public void saveList(ActionEvent actionEvent)
     {

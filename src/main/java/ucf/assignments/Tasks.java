@@ -4,6 +4,9 @@ package ucf.assignments;
  *  Copyright 2021 Daniel Ragusa
  */
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 
@@ -13,54 +16,15 @@ public class Tasks
     //Here a global ArrayList of String will be created to hold current lists. current_lists
     //Here a global 2d array of String will be created to hold current items. current_items[100][2]
 
-    ArrayList<String> current_lists= new ArrayList<String>();
-    String [][] current_items= new String [101][3];
-    //ArrayList<String> current_items= new ArrayList<String>();
-    int addNewItem_i=0;
+    ObservableList<String> items = FXCollections.observableArrayList();
+    ObservableList<String> incomplete_reserves = FXCollections.observableArrayList();
+    ObservableList<String> complete_reserves = FXCollections.observableArrayList();
 
 
 
-    //public ArrayList<String> addNewListReaction (String title)
-   // {
-        /*
-        This function will take in the users input as a string variable called title.
-        It will then add the title to the current_lists ArrayList.
-        Then the function will add the title to the left side ListView, allowing the user to see the current list of lists.
-        This function will return current_lists so that it can be used for junit testing to ensure each list is added properly.
 
-         */
-       // current_lists.add(title);
-       // return current_lists;
 
-    //}
-    //public ArrayList<String> removeListReaction (ArrayList<String> current_lists)
-    //{
-        /*
-        This function will create an index integer variable that holds the index of the currently highlighted list in the application when the removeList button is clicked.
-        This index variable will be defaulted to 0.
-        This function will use the index to remove the list from current_lists, and also remove it from the left side ListView.
-        The user will immediately see the title removed from the left-hand listView area.
-        This function will then return the updated current_list_titles so that it can be compared to the original list for junit testing.
-         */
-
-        //ArrayList<String> nothing= new ArrayList<String>();
-       // return nothing;
-
-   // }
-  //  public ArrayList<String> editTitleReaction(String title)
-   // {
-        /*
-        This function will take in a string that holds the users text from the editTitle text field.
-        This function will use the same approach as removeList by creating an index integer variable that holds the index of the currently highlighted list in the application when the editTitle button is clicked.
-        This index will allow the function to understand which list the user wishes to edit.
-        The function will then locate the list in the current_lists array, and replace the string value with the users text from the editTitle text field.
-        It will use the current_lists to update the list_of_lists listView variable which will then allow the change to be visible to the user.
-        Lastly this function will return the current_lists array list for junit testing.
-         */
-      //  ArrayList<String> nothing= new ArrayList<String>();
-      //  return nothing;
-   // }
-    public String [][]  addNewItemReaction(String description, String due_date)
+    public void addNewItemReaction(String description, String due_date)
     {
         /*
         This function will store the text from the addNewItem description, and due date text fields into 2 separate string variables, these String will be defaulted to NULL.
@@ -71,15 +35,12 @@ public class Tasks
         Lastly the function will return the current_items array for junit testing.
 
          */
-        current_items[addNewItem_i][0]=description;
-        current_items[addNewItem_i][1]=due_date;
-        current_items[addNewItem_i][2]="Incomplete";
-        System.out.print(current_items[addNewItem_i][0]);
-        addNewItem_i++;
+        items.add(description + "," + due_date + "," + "Incomplete");
 
-        return current_items;
+
+
     }
-    public String [][] removeItemReaction(int index)
+    public void removeItemReaction(int index)
     {
         /*
         This function will take the current items 2d array as parameter.
@@ -90,13 +51,14 @@ public class Tasks
         This index will be erased from the ListView item list, allowing the user to immediately see the updated list of items.
         Lastly, the function will return the updated current_items array for junit testing.
          */
-        current_items[index][0]="";
-        current_items[index][1]="";
-        current_items[index][2]="";
-        return current_items;
+        //current_items[index][0]="";
+        //current_items[index][1]="";
+        //current_items[index][2]="";
+        items.remove(index);
+
 
     }
-    public String [][] editDescriptionReaction(int index,String new_description)
+    public void editDescriptionReaction(int index, String new_description)
     {
         /*
         This function will take in the array current_items as its parameter.
@@ -109,10 +71,22 @@ public class Tasks
         The function will then use the new string to update the listView items list.
         Lastly the function will return the current_items array for junit testing.
          */
-        current_items[index][0]=new_description;
-        return current_items;
+        //current_items[index][0]=new_description;
+
+        String current = items.get(index);
+        String[] current_string = current.split(",");
+        items.set(index, new_description + "," + current_string[1] + "," + current_string[2]);
+
+
+
+
+
+
+
+
+        //items.add(index,new_description+","+current_string[1]+","+current_string[2]);
     }
-    public String [][] editDueDateReaction(int index,String  new_due_date)
+    public void editDueDateReaction(int index, String  new_due_date)
     {
         /*
         This function will take in the 2d array that holds all items as parameter.
@@ -125,10 +99,15 @@ public class Tasks
         The user will then be able to see the updated due date.
         Lastly the function will return the current_items 2d array for junit testing.
          */
-        current_items[index][1]=new_due_date;
-        return current_items;
+        //current_items[index][1]=new_due_date;
+
+            String current = items.get(index);
+            String[] current_string = current.split(",");
+            items.set(index, current_string[0] + "," + new_due_date + "," + current_string[2]);
+
+
     }
-    public String [][] markItemAsCompleteReaction(int index)
+    public void markItemAsCompleteReaction(int index)
     {
         /*
         This function will take in the current_items 2d array as parameter.
@@ -140,17 +119,26 @@ public class Tasks
         The user will then be able to view the updated status.
         Lastly the function will return the edited current_items array to be used in junit testing.
          */
-        current_items[index][2]="Complete";
-        return current_items;
+
+        String current = items.get(index);
+        String[] current_string = current.split(",");
+        items.set(index, current_string[0] + "," + current_string[1] + "," + "Complete");
+
+        //current_items[index][2]="Complete";
     }
 
-    public String [][] markItemAsIncompleteReaction(int index)
+    public void markItemAsIncompleteReaction(int index)
     {
-        current_items[index][2]="Incomplete";
-        return current_items;
+
+        String current = items.get(index);
+        String[] current_string = current.split(",");
+        items.set(index, current_string[0] + "," + current_string[1] + "," + "Incomplete");
+
+
+        //current_items[index][2]="Incomplete";
 
     }
-    public ArrayList<String> displayAllItemsReaction(String [][] current_items)
+    public void displayAllItemsReaction()
     {
         /*
         This function will take in the current_items 2d array as parameter.
@@ -165,21 +153,19 @@ public class Tasks
         This ArrayList will hold each fully formatted item string, the same string that the user will see on the ListView item list.
         Lastly the function will return this ArrayList for junit testing.
          */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
+        items.addAll(complete_reserves);
+        items.addAll(incomplete_reserves);
+        complete_reserves.clear();
+        incomplete_reserves.clear();
+
     }
-    public String [][] clearAllItemsReaction()
+    public void clearAllItemsReaction()
     {
-        for(int i=0;i< current_items.length;i++)
-        {
-            current_items[i][0]="";
-            current_items[i][1]="";
-            current_items[i][2]="";
-        }
-        addNewItem_i=0;
-        return current_items;
+        items.clear();
+        incomplete_reserves.clear();
+        complete_reserves.clear();
     }
-    public ArrayList<String> displayIncompletedItemsReaction(String [][] current_items)
+    public ObservableList<String> displayIncompletedItemsReaction()
     {
         /*
         This function will take in the 2d array current_items as parameter.
@@ -193,10 +179,25 @@ public class Tasks
         The function will then use this ArrayList of incomplete items to update the ListView item list.
         Lastly the function will return the ArrayList for junit testing.
          */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
+
+
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        for(int i=0;i<items.size();i++)
+        {
+            String current=items.get(i);
+            String[] current_string=current.split(",");
+            if(current_string[2].equals("Complete"))
+            {
+                complete_reserves.add(items.get(i));
+                items.remove(i);
+                i--;
+            }
+        }
+
+
+        return complete_reserves;
     }
-    public ArrayList<String> displayCompletedItemsReaction(String [][] current_items)
+    public ObservableList<String> displayCompletedItemsReaction()
     {
         /*
         This function will take in the 2d array current_items as parameter.
@@ -210,47 +211,22 @@ public class Tasks
         The function will then use this ArrayList of completed items to update the ListView item list.
         Lastly the function return the ArrayList for junit testing.
          */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+        for(int i=0;i<items.size();i++)
+        {
+            String current=items.get(i);
+            String[] current_string=current.split(",");
+            if(current_string[2].equals("Incomplete"))
+            {
+                incomplete_reserves.add(items.get(i));
+                items.remove(i);
+                i--;
+            }
+        }
+        return incomplete_reserves;
     }
-    public ArrayList<String> saveItemsFromListReaction(String [][] current_items,String title)
-    {
-        /*
-        This function will take in the 2d array current_items, and the string title as parameter.
-        This function will use the current_items array to save each item to ExternalStorage.txt
-        This function will use a loop to increment through each item using an integer variable i.
-        Each time the loop is run it will be looking at the 3 row indexes of each column.
-        Ex. [i][0],[i][1],[i][2]
-        These indexes will contain the description, due date, and completion status for item i.
-        The function will create a string variable inside the loop to hold this information.
-        The string will begin as "{title}"+"\n" so that all items can be associated with the correct list.
-        The string will be built using a csv approach. Description,DueDate,CompletionStatus+"\n".
-        Each time the loop runs it will save the Description,DueDate, and CompletionStatus to saved_items ArrayList of string.
-        Lastly the function will return the saved_items ArrayList for junit testing.
-         */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
-    }
-    public ArrayList<String> saveAllItemsReaction (String [][] current_items)
-    {
-        /*
-        This function will take in the 2d array current_items as parameter.
-        This function will use the current_items array to save each item to ExternalStorage.txt
-        This function will use a loop to increment through each item using an integer variable i.
-        Each time the loop is run it will be looking at the 3 row indexes of each column.
-        Ex. [i][0],[i][1],[i][2]
-        These indexes will contain the description, due date, and completion status for item i.
-        The function will create a string variable inside the loop to hold this information.
-        The string will be built using a csv approach. Description,DueDate,CompletionStatus.
-        Once this string is complete it will be added to a saved_items ArrayList.
-        Once the loop is complete the function will use the saved_items array to write to the ExternalStorage text file.
-        Each line will contain 1 items information.
-        Lastly the function will return the saved_items ArrayList for junit testing.
-         */
-        ArrayList<String> nothing= new ArrayList<String>();
-        return nothing;
 
-    }
+
     public int loadSingleListReaction(String title, ArrayList<String> loadable_lists)
     {
         /*
@@ -266,22 +242,5 @@ public class Tasks
         */
         return 1;
     }
-    public int loadMultipleListsReaction(String title,ArrayList<String> loadable_lists)
-    {
-        /*
-        This function will read from the external storage file called ExternalStorage.txt.
-        This function will take in a string called titles as parameter.
-        This string will be used to locate the correct list.
-        This string will be split using .split to get each title separate.
-        The titles will be added to a searchable_titles ArrayList of string.
-        The function will then iterate through the ExternalStorage.txt file and fill up an ArrayList of string called loadable_lists.
-        The function will use string.split to properly locate the title of each list in storage.
-        This function will then have a nested loop that is looking for a match between any of the titles in searchable_titles, and a title in loadable_lists.
-        If the loop finds a match then it will add the lists items into the loaded_lists ArrayList.
-        If the loop reaches the end of the file without a match then 0 will be returned.
-        Once the loop is complete it will have filled the loaded_lists with all matches, and the loaded_lists ArrayList will be copied to the ListView item list.
-        The function will then return 1.
-        */
-        return 1;
-    }
+
 }

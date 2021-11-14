@@ -32,14 +32,17 @@ public class MainApp extends Application
         stage.show();
 
 
+
+
     }
 
     public static void main(String[] args)
     {
+        FXMLController controller = new FXMLController();
+        Tasks Tasks= new Tasks();
 
 
         launch(args);
-
     }
 
 }

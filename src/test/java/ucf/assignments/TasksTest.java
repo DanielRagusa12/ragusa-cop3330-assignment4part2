@@ -12,9 +12,8 @@ class TasksTest {
         String description="Test";
         String due_date= "0000-00-00";
         TestTasks.addNewItemReaction(description,due_date);
-        assertEquals("Test",TestTasks.current_items[0][0]);
-        assertEquals("0000-00-00",TestTasks.current_items[0][1]);
-        assertEquals("Incomplete",TestTasks.current_items[0][2]);
+
+        assertEquals("Test,0000-00-00,Incomplete",TestTasks.items.get(0));
 
         /*
         This test will be creating a 2d array of string that holds the following values at each index. [0][0]="0",[0][1]="1",[0][2]="2".
@@ -24,6 +23,8 @@ class TasksTest {
          */
 
     }
+
+
 
     @org.junit.jupiter.api.Test
     void removeItemReaction()
@@ -36,24 +37,14 @@ class TasksTest {
 
          */
         Tasks TestTasks = new Tasks();
-        TestTasks.current_items[0][0]="Chores";
-        TestTasks.current_items[0][1]="0000-00-00";
-        TestTasks.current_items[0][2]="Complete";
+        TestTasks.items.add("Test,0000-00-00,Incomplete");
+        TestTasks.items.add("Chores,0000-00-00,Incomplete");
+        TestTasks.items.add("Homework,0000-00-00,Incomplete");
+        TestTasks.removeItemReaction(1);
+        assertEquals("Homework,0000-00-00,Incomplete",TestTasks.items.get(1));
 
-        TestTasks.current_items[5][0]="Homework";
-        TestTasks.current_items[5][1]="5555-55-55";
-        TestTasks.current_items[5][2]="Incomplete";
-
-        TestTasks.removeItemReaction(0);
-        assertEquals("",TestTasks.current_items[0][0]);
-        assertEquals("",TestTasks.current_items[0][1]);
-        assertEquals("",TestTasks.current_items[0][2]);
-
-        TestTasks.removeItemReaction(5);
-        assertEquals("",TestTasks.current_items[5][0]);
-        assertEquals("",TestTasks.current_items[5][1]);
-        assertEquals("",TestTasks.current_items[5][2]);
     }
+
 
     @org.junit.jupiter.api.Test
     void editDescriptionReaction()
@@ -65,13 +56,11 @@ class TasksTest {
         The test will then assert that the returned 2d array will be NULL at index [0][0], and that indexes [0][1], and [0][2] are unchanged.
          */
         Tasks TestTasks = new Tasks();
-        TestTasks.current_items[0][0]="Chores";
-        TestTasks.current_items[0][1]="0000-00-00";
-        TestTasks.current_items[0][2]="Complete";
+        TestTasks.items.add(0,"Test,0000-00-00,Incomplete");
+        TestTasks.editDescriptionReaction(0,"It Worked");
+        assertEquals("It Worked,0000-00-00,Incomplete",TestTasks.items.get(0));
 
-        TestTasks.editDescriptionReaction(0,"Homework");
-
-        assertEquals(TestTasks.current_items[0][0],"Homework");
+        //assertEquals(TestTasks.current_items[0][0],"Homework");
 
 
     }
@@ -87,13 +76,10 @@ class TasksTest {
         */
 
         Tasks TestTasks = new Tasks();
-        TestTasks.current_items[0][0]="Chores";
-        TestTasks.current_items[0][1]="0000-00-00";
-        TestTasks.current_items[0][2]="Complete";
-
+        TestTasks.items.add(0,"Test,0000-00-00,Incomplete");
         TestTasks.editDueDateReaction(0,"2222-22-22");
+        assertEquals("Test,2222-22-22,Incomplete",TestTasks.items.get(0));
 
-        assertEquals(TestTasks.current_items[0][1],"2222-22-22");
     }
 
     @org.junit.jupiter.api.Test
@@ -106,48 +92,51 @@ class TasksTest {
         The test will then assert that the returned 2d array will hold a string "Completed" at index [0][2], and that indexes [0][0], and [0][1] are unchanged.
          */
         Tasks TestTasks = new Tasks();
-        TestTasks.current_items[0][0]="Chores";
-        TestTasks.current_items[0][1]="0000-00-00";
-        TestTasks.current_items[0][2]="Incomplete";
+        TestTasks.items.add(0,"Test,0000-00-00,Incomplete");
+        TestTasks.markItemAsCompleteReaction(0);
+        assertEquals("Test,0000-00-00,Complete",TestTasks.items.get(0));
+
 
         TestTasks.markItemAsCompleteReaction(0);
 
-        assertEquals(TestTasks.current_items[0][2],"Complete");
+        //assertEquals(TestTasks.current_items[0][2],"Complete");
 
     }
 
     @org.junit.jupiter.api.Test
     void markItemAsIncompleteReaction()
     {
-
         Tasks TestTasks = new Tasks();
-        TestTasks.current_items[0][0]="Chores";
-        TestTasks.current_items[0][1]="0000-00-00";
-        TestTasks.current_items[0][2]="Complete";
-
+        TestTasks.items.add(0,"Test,0000-00-00,Complete");
         TestTasks.markItemAsIncompleteReaction(0);
-
-        assertEquals(TestTasks.current_items[0][2],"Incomplete");
-
+        assertEquals("Test,0000-00-00,Incomplete",TestTasks.items.get(0));
     }
 
     @org.junit.jupiter.api.Test
     void clearAllItemsReaction()
     {
         Tasks TestTasks = new Tasks();
-        TestTasks.current_items[0][0]="Chores";
-        TestTasks.current_items[0][1]="0000-00-00";
-        TestTasks.current_items[0][2]="Complete";
+        TestTasks.items.add(0,"Test,0000-00-00,Complete");
+        TestTasks.items.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.items.add(2,"Homework,0000-00-00,Complete");
 
-        TestTasks.current_items[1][0]="Homework";
-        TestTasks.current_items[1][1]="2222-22-22";
-        TestTasks.current_items[1][2]="Incomplete";
+        TestTasks.complete_reserves.add(0,"Test,0000-00-00,Complete");
+        TestTasks.complete_reserves.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.complete_reserves.add(2,"Homework,0000-00-00,Complete");
+
+        TestTasks.incomplete_reserves.add(0,"Test,0000-00-00,Complete");
+        TestTasks.incomplete_reserves.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.incomplete_reserves.add(2,"Homework,0000-00-00,Complete");
 
         TestTasks.clearAllItemsReaction();
 
-        assertEquals(TestTasks.current_items[0][0],"");
+        assertEquals(0,TestTasks.items.size());
+        assertEquals(0,TestTasks.complete_reserves.size());
+        assertEquals(0,TestTasks.incomplete_reserves.size());
+
 
     }
+
 
 
 
@@ -163,6 +152,30 @@ class TasksTest {
         If the function is working properly it should add the strings from [0][0],[0][1], and [0][2], into one continuous string with each part being separated by a /.
         The test will assert that the empty array list now holds "Chores/2022-02-12/Incomplete" at index [0].
          */
+        Tasks TestTasks = new Tasks();
+
+        TestTasks.items.add(0,"Test,0000-00-00,Complete");
+        TestTasks.items.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.items.add(2,"Homework,0000-00-00,Complete");
+
+        TestTasks.complete_reserves.add(0,"Coding,3333-33-33,Incomplete");
+        TestTasks.complete_reserves.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.complete_reserves.add(2,"Homework,0000-00-00,Complete");
+
+        TestTasks.incomplete_reserves.add(0,"Practice,5555-55-55,Complete");
+        TestTasks.incomplete_reserves.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.incomplete_reserves.add(2,"Homework,0000-00-00,Complete");
+
+        TestTasks.displayAllItemsReaction();
+
+        assertEquals("Test,0000-00-00,Complete",TestTasks.items.get(0));
+        assertEquals("Coding,3333-33-33,Incomplete",TestTasks.items.get(3));
+        assertEquals("Practice,5555-55-55,Complete",TestTasks.items.get(6));
+
+        assertEquals(0,TestTasks.complete_reserves.size());
+        assertEquals(0,TestTasks.incomplete_reserves.size());
+
+
     }
 
     @org.junit.jupiter.api.Test
@@ -180,6 +193,7 @@ class TasksTest {
         The test will assert that the empty array list now holds
         "Chores/2022-02-12/Incomplete" at index [0]. and "Cleaning/2022-02-14/Incomplete" at index [1].
          */
+
     }
 
     @org.junit.jupiter.api.Test
