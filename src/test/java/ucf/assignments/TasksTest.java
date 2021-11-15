@@ -235,26 +235,7 @@ class TasksTest {
 
     }
 
-    @org.junit.jupiter.api.Test
-    void saveAllItemsReaction()
-    {
-         /*
-        This test will be creating a 2d array that holds the following values at each index.
-        [0][0] ="Chores",[0][1]="2022-02-12",[0][2]="Incomplete".
-        [0][0] ="Homework",[0][1]="2021-11-10",[0][2]="Complete".
-        [0][0] ="Cleaning",[0][1]="2022-02-14",[0][2]="Incomplete".
-        This test will then call the saveItemsFromListReaction function,passing the 2d array.
-        If the function is working properly it will return an ArrayList with the following string values.
-        [0]="Chores,2022-02-12,Incomplete"
-        [1]="Homework,2021-11-10,Complete"
-        [2]="Cleaning,2022-02-14,Incomplete"
-        The test will assert that indexes [0],[1],and [2] match the above strings.
-        This test works because the saveItemsFromListReaction uses the tested ArrayList to print to the ExternalStorage.txt output file.
 
-         */
-
-
-    }
 
     @org.junit.jupiter.api.Test
     void loadSingleListReaction()
@@ -275,22 +256,4 @@ class TasksTest {
 
     }
 
-    @org.junit.jupiter.api.Test
-    void loadMultipleListsReaction()
-    {
-        /*
-            This test will start by creating an ArrayList of string called loadable_lists with the following values.
-            [0]="Chores"
-            [1]="Cleaning"
-            [2]="Homework"
-            The test will then create a string variable called titles that holds "test,Chores,hello".
-
-            This test will then call the loadSingleListReaction function, passing the ArrayList, and title string.
-            This test will assert that the loadSingleListReaction function will return 1, because "Chores" exists in its loadable_lists ArrayList.
-
-
-         */
-
-
-    }
 }

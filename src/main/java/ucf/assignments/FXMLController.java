@@ -5,12 +5,18 @@ package ucf.assignments;/*
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import javax.swing.text.StringContent;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
 
@@ -35,8 +41,12 @@ public class FXMLController
     public Button clearAllItems_btn;
     public Button markItemAsIncomplete_btn;
     public TextField saveList_title;
+    public ChoiceBox completionPicker;
+    public CheckBox setComplete_checkbox;
+    public Text error_box;
+    public Text error_box2;
     Tasks Tasks= new Tasks();
-
+    ObservableList<String> choices = FXCollections.observableArrayList("Complete","Incomplete");
 
 
     /*
@@ -47,28 +57,66 @@ public class FXMLController
     These Reaction functions will hold the true code, for processing, and displaying information to the user.
     When an action event occurs, the function will then call its counterpart "Reaction" function.
      */
+    public boolean isDateValid(String due_date)
+    {
+        error_box.setText("");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try
+        {
+            LocalDate.parse(due_date, formatter);
+        } catch (DateTimeParseException e)
+        {
+            error_box.setText("Invalid Date!");
+            return false;
+        }
+        return true;
+    }
+    public boolean isDescriptionValid(String description)
+    {
+        error_box2.setText("");
+
+        if(description.isEmpty() || description.length()>256)
+        {
+            error_box2.setText("Invalid Description!");
+            return false;
+        }
+        else
+            return true;
+    }
 
 
 
 
 
+    public void setComplete(ActionEvent actionEvent)
+    {
 
-
-
-
-
-
+        if(setComplete_checkbox.selectedProperty().get())
+        {
+            Tasks.Completion_Flag=1;
+        }
+        else
+            Tasks.Completion_Flag=0;
+    }
 
     //Function to add a new item to an existing list.
 
     public void addNewItem(ActionEvent actionEvent)
     {
+
+
+
         list_of_items.setItems(Tasks.items);
 
 
         String description=addNewItem_Desciption.getText();
         String due_date=addNewItem_DueDate.getText();
-        if(!description.isEmpty() && !due_date.isEmpty())
+
+        boolean date_check=isDateValid(due_date);
+        boolean des_check=isDescriptionValid(description);
+
+        if(date_check && des_check)
         {
             Tasks.addNewItemReaction(description, due_date);
             //Tasks.addNewItem_i++;
@@ -109,7 +157,13 @@ public class FXMLController
         */
         int index =  list_of_items.getFocusModel().getFocusedIndex();
         String new_description=editDescription_Description.getText();
-        Tasks.editDescriptionReaction(index,new_description);
+
+        boolean des_check=isDescriptionValid(new_description);
+        if(des_check)
+        {
+            Tasks.editDescriptionReaction(index,new_description);
+        }
+
 
     }
 
@@ -124,7 +178,14 @@ public class FXMLController
          */
         int index =  list_of_items.getFocusModel().getFocusedIndex();
         String new_due_date=editDueDate_DueDate.getText();
-        Tasks.editDueDateReaction(index,new_due_date);
+
+        boolean date_check=isDateValid(new_due_date);
+
+        if(date_check)
+        {
+            Tasks.editDueDateReaction(index,new_due_date);
+        }
+
     }
 
     //A function that allows the user to mark a current item as complete.
@@ -167,6 +228,7 @@ public class FXMLController
     //A function that allows the user to sort the ListView item list by only incomplete items.
     public void displayIncompletedItems(ActionEvent actionEvent)
     {
+        Tasks.displayAllItemsReaction();
         Tasks.displayIncompletedItemsReaction();
         //list_of_items.setItems(Tasks.incomplete_items);
         /*
@@ -180,6 +242,7 @@ public class FXMLController
     //A function that allows the user to sort the ListView item list by only incomplete items.
     public void displayCompletedItems(ActionEvent actionEvent)
     {
+        Tasks.displayAllItemsReaction();
         Tasks.displayCompletedItemsReaction();
         /*
         This function will be executed when the user clicks the displayCompletedItems button.
@@ -193,23 +256,42 @@ public class FXMLController
 
 
     //A function that allows the user to load a singular list from external storage.
-    public void loadSingleList(ActionEvent actionEvent)
-    {
+    public void loadSingleList(ActionEvent actionEvent) throws IOException {
+
         /*
         This function will be executed when the user clicks the loadSingleList button.
         This function will create a string variable called title that holds the string from the loadSingleList title text field.
         This function will call loadSingleListReaction, from the Tasks class, with the title string.
          */
+        list_of_items.setItems(Tasks.items);
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        File file =chooser.showOpenDialog(loadSingleList_btn.getScene().getWindow());
+        Tasks.loadListReaction(file);
+
 
 
     }
 
 
-    public void saveList(ActionEvent actionEvent)
-    {
-        
-    }
+    public void saveList(ActionEvent actionEvent) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
 
+        File file=fileChooser.showSaveDialog(null);
+        if (file != null)
+        {
+            Tasks.saveListReaction(file);
+        }
+
+
+
+    }
 
 
 

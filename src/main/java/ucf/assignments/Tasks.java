@@ -7,6 +7,7 @@ package ucf.assignments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.*;
 import java.util.ArrayList;
 
 
@@ -19,6 +20,7 @@ public class Tasks
     ObservableList<String> items = FXCollections.observableArrayList();
     ObservableList<String> incomplete_reserves = FXCollections.observableArrayList();
     ObservableList<String> complete_reserves = FXCollections.observableArrayList();
+    int Completion_Flag=0;
 
 
 
@@ -35,7 +37,15 @@ public class Tasks
         Lastly the function will return the current_items array for junit testing.
 
          */
-        items.add(description + "," + due_date + "," + "Incomplete");
+        if(Completion_Flag==0)
+        {
+            items.add(description + "," + due_date + "," + "Incomplete");
+        }
+        else
+            items.add(description + "," + due_date + "," + "Complete");
+
+
+
 
 
 
@@ -227,7 +237,7 @@ public class Tasks
     }
 
 
-    public int loadSingleListReaction(String title, ArrayList<String> loadable_lists)
+    public void loadListReaction(File file) throws IOException
     {
         /*
         This function will read from the external storage file called ExternalStorage.txt.
@@ -240,7 +250,30 @@ public class Tasks
         Once the loop is complete it will have filled the loaded_lists with all matches, and the loaded_lists ArrayList will be copied to the ListView item list.
         The function will then return 1.
         */
-        return 1;
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        String current = "";
+        while ((current = br.readLine()) != null)
+        {
+            items.add(current);
+        }
+
+    }
+    public void saveListReaction(File file) throws IOException
+    {
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+        for(int i=0;i<items.size();i++)
+        {
+            bw.write(items.get(i));
+            bw.write("\n");
+        }
+
+        bw.flush();
+        bw.close();
+
+
     }
 
 }
