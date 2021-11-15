@@ -3,50 +3,74 @@
 
 class FXMLController
 {
-{method} +addNewList()
-{method} +removeList()
-{method} +editTitle()
+{field} +Button addNewItem_btn
+{field} +Button removeItem_btn
+{field} +Button editDescription_btn
+{field} +Button editDueDate_btn
+{field} +Button markItemAsComplete_btn
+{field} +ListView<String> list_of_items
+{field} +Button displayAllItems_btn
+{field} +Button displayIncompletedItems_btn
+{field} +Button displayCompletedItems_btn
+{field} +Button loadSingleList_btn
+{field} +TextField addNewItem_Desciption
+{field} +TextField addNewItem_DueDate
+{field} +TextField editDescription_Description
+{field} +TextField editDueDate_DueDate
+{field} +Button saveList_btn
+{field} +Button clearAllItems_btn
+{field} +Button markItemAsIncomplete_btn
+{field} +CheckBox setComplete_checkbox
+{field} +Text error_box
+{field} +Text error_box2
+
+
+{method} +isDateValid()
+{method} +isDescriptionValid()
+{method} +setComplete()
 {method} +addNewItem()
 {method} +removeItem()
 {method} +editDescription()
 {method} +editDueDate()
 {method} +markItemAsComplete()
+{method} +markItemAsIncomplete()
 {method} +displayAllItems()
+{method} +clearAllItems()
 {method} +displayIncompletedItems()
 {method} +displayCompletedItems()
-{method} +saveItemsFromList()
-{method} +saveAllItems()
-{method} +loadSingleList()
-{method} +loadMultipleLists()
+{method} +loadList()
+{method} +saveList()
 
 }
 
 
+
 class Tasks
 {
-{field} ArrayList<String> current_lists
-{field} String [][] current_items
-{method} +addNewListReaction()
-{method} +removeListReaction()
-{method} +editTitleReaction()
+{field} +ObservableList<String> items
+{field} +ObservableList<String> incomplete_reserves
+{field} +ObservableList<String> complete_reserves
+{field} +int Completion_Flag
+
 {method} +addNewItemReaction()
 {method} +removeItemReaction()
 {method} +editDescriptionReaction()
 {method} +editDueDateReaction()
 {method} +markItemAsCompleteReaction()
+{method} +markItemAsIncompleteReaction()
 {method} +displayAllItemsReaction()
+{method} +clearAllItemsReaction()
 {method} +displayIncompletedItemsReaction()
 {method} +displayCompletedItemsReaction()
-{method} +saveItemsFromListReaction()
-{method} +saveAllItemsReaction()
-{method} +loadSingleListReaction()
-{method} +loadMultipleListsReaction()
+{method} +loadListReaction()
+{method} +saveListReaction()
 }
 class MainApp
 {
 {method} +start()
 {method} +main()
 }
+
 
 
 @enduml

@@ -19,7 +19,7 @@
         <Button fx:id="displayIncompletedItems_btn" layoutX="164.0" layoutY="135.0" mnemonicParsing="false" onAction="#displayIncompletedItems" prefHeight="25.0" prefWidth="159.0" text="Display Incompleted Items" />
         <Button fx:id="displayCompletedItems_btn" layoutX="164.0" layoutY="99.0" mnemonicParsing="false" onAction="#displayCompletedItems" prefHeight="25.0" prefWidth="159.0" text="Display Completed Items" />
         <Button fx:id="saveList_btn" layoutX="164.0" layoutY="52.0" mnemonicParsing="false" onAction="#saveList" prefHeight="25.0" prefWidth="159.0" text="Save List" />
-        <Button fx:id="loadSingleList_btn" layoutX="164.0" layoutY="16.0" mnemonicParsing="false" onAction="#loadSingleList" prefHeight="25.0" prefWidth="159.0" text="Load List" />
+        <Button fx:id="loadSingleList_btn" layoutX="164.0" layoutY="16.0" mnemonicParsing="false" onAction="#loadList" prefHeight="25.0" prefWidth="159.0" text="Load List" />
         <TextField fx:id="addNewItem_Desciption" layoutX="629.0" layoutY="304.0" prefHeight="25.0" prefWidth="226.0" promptText="Description" />
         <TextField fx:id="addNewItem_DueDate" layoutX="629.0" layoutY="343.0" prefHeight="25.0" prefWidth="226.0" promptText="Due Date: YYYY-MM-DD" />
         <TextField fx:id="editDescription_Description" layoutX="336.0" layoutY="225.0" prefHeight="25.0" prefWidth="159.0" promptText="New Description:" />

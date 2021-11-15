@@ -1,5 +1,7 @@
 package ucf.assignments;
 
+import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TasksTest {
@@ -8,6 +10,12 @@ class TasksTest {
     @org.junit.jupiter.api.Test
     void addNewItemReaction()
     {
+        /*
+        This test creates a description, and due date string to pass to addNewItemReaction.
+        If the function works properly then the strings should be added to the items observable list with comma separation and with "Incomplete" added.
+        The test asserts this.
+
+         */
         Tasks TestTasks = new Tasks();
         String description="Test";
         String due_date= "0000-00-00";
@@ -15,12 +23,6 @@ class TasksTest {
 
         assertEquals("Test,0000-00-00,Incomplete",TestTasks.items.get(0));
 
-        /*
-        This test will be creating a 2d array of string that holds the following values at each index. [0][0]="0",[0][1]="1",[0][2]="2".
-        The addNewItemReaction defaults all string to NULL, because in the junit test there will be no input from the applications text fields.
-        This means the returned 2d array of string should now hold NULL instead of "0","1","2".
-        This test will assert that NULL is at all 3 indexes of the returned 2d Array.
-         */
 
     }
 
@@ -30,11 +32,10 @@ class TasksTest {
     void removeItemReaction()
     {
         /*
-        This test will be creating an ArrayList of string. With the string "test" at index [0].
-        This ArrayList will be passed to the removeItemReaction function.
-        Since the removeItemReaction function will not be able to assign its index variable from the application, the index will be defaulted to 0.
-        This test will assert that the returned ArrayList from removeItemReaction will now NOT hold "test" at index [0].
-
+        This test first adds 3 items to the items observable list.
+        It then calls removeItemReaction, passing 1.
+        If the function works correctly it should remove the item from index 2, and the item from index 3 should now be in its place.
+        The test asserts this.
          */
         Tasks TestTasks = new Tasks();
         TestTasks.items.add("Test,0000-00-00,Incomplete");
@@ -50,17 +51,15 @@ class TasksTest {
     void editDescriptionReaction()
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index. [0][0] ="0",[0][1]="1",[0][2]="2".
-        This test will then call the editDescriptionReaction function, passing the 2d array.
-        If the function is working correctly then it should only replace the string value at index [0][0], and the others should still be "1", and "2".
-        The test will then assert that the returned 2d array will be NULL at index [0][0], and that indexes [0][1], and [0][2] are unchanged.
+        This test adds a new item to the items observable list.
+        It then calls the editDescriptionReaction, passing 0 as the index, and "It Worked" as the new description.
+        If the function works properly it should replace the current description "Test", with "It Worked", and the rest of the string should be unchanged.
+        The test asserts this.
          */
         Tasks TestTasks = new Tasks();
         TestTasks.items.add(0,"Test,0000-00-00,Incomplete");
         TestTasks.editDescriptionReaction(0,"It Worked");
         assertEquals("It Worked,0000-00-00,Incomplete",TestTasks.items.get(0));
-
-        //assertEquals(TestTasks.current_items[0][0],"Homework");
 
 
     }
@@ -69,11 +68,11 @@ class TasksTest {
     void editDueDateReaction()
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index. [0][0] ="0",[0][1]="1",[0][2]="2".
-        This test will then call the editDueDateReaction function, passing the 2d array.
-        If the function is working correctly then it should only replace the string value at index [0][1], and the others should still be "0", and "2".
-        The test will then assert that the returned 2d array will be NULL at index [0][1], and that indexes [0][0], and [0][2] are unchanged.
-        */
+        This test adds a new item to the items observable list.
+        It then calls the editDueDateReaction, passing 0 as the index, and "2222-22-22" as the new due date.
+        If the function works properly it should replace the current due date "0000-00-00", with "2222-22-22", and the rest of the string should be unchanged.
+        The test asserts this.
+         */
 
         Tasks TestTasks = new Tasks();
         TestTasks.items.add(0,"Test,0000-00-00,Incomplete");
@@ -86,11 +85,12 @@ class TasksTest {
     void markItemAsCompleteReaction()
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index. [0][0] ="Chores",[0][1]="2022-02-12",[0][2]="Incomplete".
-        This test will then call the markItemAsCompleteReaction function, passing the 2d array.
-        If the function is working correctly then it should only replace the string value at index [0][3], and the others should still be "Chores", and "2022-02-12".
-        The test will then assert that the returned 2d array will hold a string "Completed" at index [0][2], and that indexes [0][0], and [0][1] are unchanged.
+        This test adds a new item to the items observable list.
+        It then calls markItemAsCompleteReaction passing 0 as the index.
+        If the function works properly it should replace the current completion status "Incomplete", with "Complete", and the rest of the string should be unchanged.
+        The test asserts this.
          */
+
         Tasks TestTasks = new Tasks();
         TestTasks.items.add(0,"Test,0000-00-00,Incomplete");
         TestTasks.markItemAsCompleteReaction(0);
@@ -99,13 +99,18 @@ class TasksTest {
 
         TestTasks.markItemAsCompleteReaction(0);
 
-        //assertEquals(TestTasks.current_items[0][2],"Complete");
 
     }
 
     @org.junit.jupiter.api.Test
     void markItemAsIncompleteReaction()
     {
+        /*
+        This test adds a new item to the items observable list.
+        It then calls markItemAsIncompleteReaction passing 0 as the index.
+        If the function works properly it should replace the current completion status "Complete", with "Incomplete", and the rest of the string should be unchanged.
+        The test asserts this.
+         */
         Tasks TestTasks = new Tasks();
         TestTasks.items.add(0,"Test,0000-00-00,Complete");
         TestTasks.markItemAsIncompleteReaction(0);
@@ -115,6 +120,12 @@ class TasksTest {
     @org.junit.jupiter.api.Test
     void clearAllItemsReaction()
     {
+        /*
+        This test starts by adding 3 new items to each observable list, items,complete reserves,and incomplete reserves.
+        The test then calls clearAllItemsReaction.
+        If the function works correctly it should clear all items from each observable list.
+        The test asserts that the size of each list is now 0.
+         */
         Tasks TestTasks = new Tasks();
         TestTasks.items.add(0,"Test,0000-00-00,Complete");
         TestTasks.items.add(1,"Chores,0000-00-00,Incomplete");
@@ -137,20 +148,16 @@ class TasksTest {
 
     }
 
-
-
-
-
-
     @org.junit.jupiter.api.Test
     void displayAllItemsReaction()
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index. [0][0] ="Chores",[0][1]="2022-02-12",[0][2]="Incomplete".
-        The test will then call the displayAllItemsReaction function, passing the 2d array.
-        This function will return to an empty ArrayList of String.
-        If the function is working properly it should add the strings from [0][0],[0][1], and [0][2], into one continuous string with each part being separated by a /.
-        The test will assert that the empty array list now holds "Chores/2022-02-12/Incomplete" at index [0].
+        This test starts by adding 3 new items to each observable list, items,complete reserves,and incomplete reserves.
+        The test then calls displayAllItemsReaction.
+        If the function works correctly it should first add all complete reserves, and then incomplete reserves to the items observable list.
+        This test asserts that the items observable list now holds complete_reserves[0], at items[3], and incomplete_reserves[0], at items[6].
+        Lastly, the test asserts that the size of each reserve list is now 0.
+
          */
         Tasks TestTasks = new Tasks();
 
@@ -182,77 +189,78 @@ class TasksTest {
     void displayIncompletedItemsReaction()
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index.
-        [0][0] ="Chores",[0][1]="2022-02-12",[0][2]="Incomplete".
-        [0][0] ="Homework",[0][1]="2021-11-10",[0][2]="Complete".
-        [0][0] ="Cleaning",[0][1]="2022-02-14",[0][2]="Incomplete".
-
-        The test will then call the displayIncompletedItemsReaction function, passing the 2d array.
-        This function will return to an empty ArrayList of String.
-        If the function is working properly it should only add the incomplete items into the ArrayList.
-        The test will assert that the empty array list now holds
-        "Chores/2022-02-12/Incomplete" at index [0]. and "Cleaning/2022-02-14/Incomplete" at index [1].
+        This test first adds three items to the items observable list.
+        This test then calls the displayIncompletedItemsReaction function.
+        If the function works correctly it should add both completed items into the complete reserves observable list.
+        The test asserts this.
          */
+        Tasks TestTasks = new Tasks();
+        TestTasks.items.add(0,"Test,0000-00-00,Complete");
+        TestTasks.items.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.items.add(2,"Homework,0000-00-00,Complete");
 
+        TestTasks.displayIncompletedItemsReaction();
+
+        assertEquals("Test,0000-00-00,Complete",TestTasks.complete_reserves.get(0));
+        assertEquals("Homework,0000-00-00,Complete",TestTasks.complete_reserves.get(1));
     }
 
     @org.junit.jupiter.api.Test
     void displayCompletedItemsReaction()
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index.
-        [0][0] ="Chores",[0][1]="2022-02-12",[0][2]="Incomplete".
-        [0][0] ="Homework",[0][1]="2021-11-10",[0][2]="Complete".
-        [0][0] ="Cleaning",[0][1]="2022-02-14",[0][2]="Incomplete".
-
-        The test will then call the displayIncompletedItemsReaction function,passing the 2d array.
-        This function will return to an empty ArrayList of String.
-        If the function is working properly it should only add the completed items into the ArrayList.
-        The test will assert that the empty array list now holds
-        "Homework/2021-11-10/Complete" at index [0].
+        This test first adds three items to the items observable list.
+        This test then calls the displayCompletedItemsReaction function.
+        If the function works correctly it should add the 1 incomplete item into the incomplete reserves observable list.
+        The test asserts this.
          */
+        Tasks TestTasks = new Tasks();
+        TestTasks.items.add(0,"Test,0000-00-00,Complete");
+        TestTasks.items.add(1,"Chores,0000-00-00,Incomplete");
+        TestTasks.items.add(2,"Homework,0000-00-00,Complete");
+
+        TestTasks.displayCompletedItemsReaction();
+
+        assertEquals("Chores,0000-00-00,Incomplete",TestTasks.incomplete_reserves.get(0));
+
     }
 
     @org.junit.jupiter.api.Test
-    void saveItemsFromListReaction()
+    void loadListReaction() throws IOException
     {
         /*
-        This test will be creating a 2d array that holds the following values at each index.
-        [0][0] ="Chores",[0][1]="2022-02-12",[0][2]="Incomplete".
-        [0][0] ="Homework",[0][1]="2021-11-10",[0][2]="Complete".
-        [0][0] ="Cleaning",[0][1]="2022-02-14",[0][2]="Incomplete".
-        This test will create a string variable called title that holds "test".
-        This test will then call the saveItemsFromListReaction function,passing the 2d array, and title string.
-        If the function is working properly it will return an ArrayList with the following string values.
-        [0]="{test}"
-        [1]="Chores,2022-02-12,Incomplete"
-        [2]="Homework,2021-11-10,Complete"
-        [3]="Cleaning,2022-02-14,Incomplete"
-        The test will assert that indexes [0],[1],[2], and [3] match the above strings.
-        This test works because the saveItemsFromListReaction uses the tested ArrayList to print to the ExternalStorage.txt output file.
-
+        This test will start by creating a new file called LoadTest.txt
+        This file holds a string at it's first line "Chores,2222-12-12,Incomplete".
+        This test then calls loadListReaction, passing the file.
+        If the function is working correctly it should add the first line from the LoadTest text file into the first index of the items observable list.
+        The test asserts this.
          */
+
+        Tasks TestTasks = new Tasks();
+        File file = new File("src/test/java/ucf/assignments/LoadTest.txt");
+        TestTasks.loadListReaction(file);
+        assertEquals("Chores,2222-12-12,Incomplete",TestTasks.items.get(0));
 
     }
 
-
-
     @org.junit.jupiter.api.Test
-    void loadSingleListReaction()
+    void saveListReaction() throws IOException
     {
         /*
-            This test will start by creating an ArrayList of string called loadable_lists with the following values.
-            [0]="Chores"
-            [1]="Cleaning"
-            [2]="Homework"
-            The test will then create a string variable called title that holds "test".
-
-            This test will then call the loadSingleListReaction function, passing the ArrayList, and title string.
-            This test will assert that the loadSingleListReaction function will return 0, because "test" does not exist in its loadable_lists ArrayList.
-
-
+        This test will start by creating a new file called SaveTest.txt
+        This file is empty.
+        This test then adds a new item to index [0] of the items observable list.
+        This test then calls saveListReaction, passing the file.
+        If the function is working correctly it should write the string from index[0] of items to the first line of the SaveTest text file.
+        The test asserts this.
          */
+        Tasks TestTasks = new Tasks();
+        File file = new File("src/test/java/ucf/assignments/SaveTest.txt");
+        TestTasks.items.add(0,"Test,2021-12-12,Incomplete");
+        TestTasks.saveListReaction(file);
+        BufferedReader br = new BufferedReader(new FileReader(file));
 
+        assertEquals("Test,2021-12-12,Incomplete",br.readLine());
 
     }
 
