@@ -1,4 +1,5 @@
 [Save/Load]
+
 Load List: 
 When the Load List button is clicked a file chooser screen will be opened. 
 This file chooser will only allow text files to be opened. 
@@ -14,6 +15,7 @@ The current contents of the ItemList will be saved to the file.
 
 
 [List Filters]
+
 DisplayCompletedItems: 
 The Display Completed Items button works as a filter for the ItemList.
 Simply left click on the button, and only completed items will be shown.
@@ -29,6 +31,7 @@ The Display All Items button can be used to remove any filters that have previou
 Simply left click the button, and all items in the list will be shown.
 
 [Item Editing]
+
 EditDescription:
 This button can be used to edit the description of an existing item in the ItemList.
 To use this button start by left clicking on the item you wish to edit.
@@ -46,6 +49,7 @@ Note that due dates must be valid within the Gregorian Calendar, and must be for
 Finally click on the editDueDate button.
 
 [Dangerous!]
+
 Note that buttons in this category are marked as dangerous becuase they have the ability to remove items from the list permantently.
 However, these changes will not take effect in your text file UNLESS you save the list.
 
@@ -59,6 +63,7 @@ You will see the item highlighted.
 Then click on the remove item button.
 
 [Marking Items]
+
 MarkItemAsComplete: 
 This button can be used to mark an existing item as complete.
 To use this button start by left clicking on an item.
@@ -72,6 +77,7 @@ This item will then be highlighted.
 Then click on the mark item as incomplete button.
 
 [Adding New Items]
+
 AddToList:
 This button can be used to add a new item to the list.
 To use this button first enter a description, and due date into the description, and due date text fields.
