@@ -7,6 +7,7 @@ Double left click on a .txt file, and the contents of the file will be displayed
 You will want to ensure that the contents of the .txt file are in the following format.
 
 "Item_Description,Item_Due_Date,Item_Completion_Status". + newline.
+
 Text files that do not follow the format may result in errors.
 
 Save List:
